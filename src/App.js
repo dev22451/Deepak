@@ -8,7 +8,9 @@ import { Component } from "react";
  class App extends Component{
   state = {
   items: [],
-  text: ""
+  text: "",
+  onEdit: false,
+
   
   
 
@@ -34,15 +36,15 @@ import { Component } from "react";
      this.setState({ items: items });
 }
   handleEdit = id => {
-    const filteredItems= this.state.items.filter(text => text.id !== id);
-    const selectedItems= this.state.items.find(text => text.id !== id);
-     this.setState({
-       items:filteredItems,
-       text:selectedItems.title,
-       id:id,
-       editItems:true
-     })
-  }
+    
+
+
+    
+
+
+    
+     
+}
 
 render() {
   return (
@@ -70,9 +72,10 @@ render() {
                         return <Plan key={i} id={i} value=
                         {value} sendData={this.handleDelete }/>
                       })
-
                     
-              
+
+
+                      
                     
                     }  
                     
