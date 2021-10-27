@@ -1,103 +1,115 @@
-import React from "react";
+import React from 'react';
+import logo from './logo.svg';
 import './App.css';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Plan from './Plan';
-import { Component } from "react";
+import ListItems from './ListItems'
 
-
- class App extends Component{
-  state = {
-  items: [],
-  text: "",
-  onEdit: false,
-
-  
-  
-
-}    
- handleChange = e => {
-   this.setState({ text: e.target.value })
-}
-
- handleAdd = e => {
-   if (this.state.text !== ""){
-     const items = [...this.state.items, this.state.text];
-     this.setState({ items: items, text: "" });
-    } 
-}
-
-  handleDelete = id => {
-    console.log("Deleted",id); 
-    const Olditems = [...this.state.items]
-    console.log("Olditems",Olditems);
-    const items = Olditems.filter((element, i) => {
-     return i !== id
-  })
-     this.setState({ items: items });
-}
-  handleEdit = id => {
-    
-
-
-    
-
-
-    
-     
-}
-
-render() {
-  return (
-    <div className="container-fluid my-5">
-        <div className="row">
-          <div className="col-sm-6 mx-auto text-white shadow-lg p-1">
-            <h1 className="text-center">Todo List</h1>
-            <div className="row">
-              <div className="col-9">
-                <input type="text" className="form-control" placeholder="Write Plan Here" value={this.state.text} onChange={this.handleChange}/>
-
-              </div>
-              <div className="col-2">
-                <button className="btn btn-warning px-5 font-weight-bold" onClick={this.handleAdd}>Add</button>
-                
-              </div>
-              <div className="conatiner-fluid">
-                  <ul className="list-unstyled row m-5">
-                    
-                  
-                    {
-                      
-
-                      this.state.items.map((value, i)=> {
-                        return <Plan key={i} id={i} value=
-                        {value} sendData={this.handleDelete }/>
-                      })
-                    
-
-
-                      
-                    
-                    }  
-                    
-                  </ul>
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
+class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      items:[],
+      currentItem:{
+        text:'',
+        key:'',
+        isChecked: false
+      }
+    }
+    this.addItem = this.addItem.bind(this);
+    this.handleInput = this.handleInput.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
+    this.setUpdate = this.setUpdate.bind(this);
+  }
+  addItem(e){
+    e.preventDefault();
+    const newItem = this.state.currentItem;
+    if(newItem.text !==""){
+      const items = [...this.state.items, newItem];
+    this.setState({
+      items: items,
+      currentItem:{
+        text:'',
+        key:''
         
-    </div> 
+      }
+    })
+   }
+  }
+  
+
+  handleInput(e){
+    this.setState({
+      currentItem:{
+        text: e.target.value,
+        key: Date.now(),
+        isChecked: false
+      }
+    })
+  }
+  deleteItem(key){
+    const filteredItems= this.state.items.filter(item =>
+      item.key!==key);
+    this.setState({
+      items: filteredItems
+    })
+
+  }
+  setUpdate(text,key){
+    const items = this.state.items;
+    items.map(item=>{      
+      if(item.key===key){
+        item.text= text;
+      }
+    })
+    this.setState({
+      items: items
+    })
     
+   
+  }
+
+  handleCheckboxChange = (e) => {
+
+  this.setState({ isChecked: e.target.checked });
+}
+  toggleChange = () => {
+
+    this.setState({ isChecked: !this.state.isChecked });
+   
+}
+onCheck = (key) => {
+  if(this.state.currentItem.isChecked === true) {
+    this.setState({
+      currentItem:{
+        isChecked: false
+      }
+    })
+  } else {
+    this.setState({
+      currentItem:{
+        isChecked: true
+      }
+    })
+  }
+}
+hendle
+ render(){
+  return (
+    <div className="App">
+      <header>
+        <form id="to-do-form" onSubmit={this.addItem}>
+          <input style={{color:'black'}} type="text" placeholder="Enter task" value= {this.state.currentItem.text} onChange={this.handleInput}></input>
+          <button type="submit">Add</button>
+        </form>
+        <p>{this.state.items.text}</p>
+        
+          <ListItems items={this.state.items} deleteItem={this.deleteItem} setUpdate={this.setUpdate} onCheck = {this.onCheck} isChecked={this.state.currentItem.isChecked}/>
+        
+      </header>
+    </div>
   );
- 
-};
-
-};
-
-
-
+ }
+}
 
 
 export default App;
+
