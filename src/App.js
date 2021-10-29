@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import ListItems from './ListItems'
 
@@ -9,9 +9,15 @@ class App extends React.Component {
     this.state = {
       items:[],
       currentItem:{
+
+        
+        onEdit:false,
+        
+      
         text:'',
         key:'',
         isChecked: false
+        
       }
     }
     this.addItem = this.addItem.bind(this);
@@ -37,14 +43,16 @@ class App extends React.Component {
   
 
   handleInput(e){
-    this.setState({
+  this.setState({
       currentItem:{
-        text: e.target.value,
-        key: Date.now(),
+       text: e.target.value,
+         key: Date.now(),
         isChecked: false
       }
-    })
-  }
+     })
+   }
+ 
+
   deleteItem(key){
     const filteredItems= this.state.items.filter(item =>
       item.key!==key);
@@ -67,6 +75,8 @@ class App extends React.Component {
    
   }
 
+
+  
   handleCheckboxChange = (e) => {
 
   this.setState({ isChecked: e.target.checked });
@@ -76,13 +86,16 @@ class App extends React.Component {
     this.setState({ isChecked: !this.state.isChecked });
    
 }
-onCheck = (key) => {
-  if(this.state.currentItem.isChecked === true) {
-    this.setState({
-      currentItem:{
-        isChecked: false
+onCheck = (index) => {
+    if(this.state.currentItem.isChecked === true) {
+      this.setState({
+        currentItem:{
+          isChecked: false  
+
+
       }
     })
+  
   } else {
     this.setState({
       currentItem:{
@@ -91,18 +104,34 @@ onCheck = (key) => {
     })
   }
 }
-hendle
+onEdit = () => {
+  this.setState({ onEdit: true})
+
+}
+
+
+
+
+
  render(){
   return (
     <div className="App">
       <header>
         <form id="to-do-form" onSubmit={this.addItem}>
-          <input style={{color:'black'}} type="text" placeholder="Enter task" value= {this.state.currentItem.text} onChange={this.handleInput}></input>
+        <br />
+          <br />
+          <input style={{color:'black',marginTop: "50px"}} type="text" placeholder="Enter task upfah" value= {this.state.currentItem.text} onChange={this.handleInput} />
           <button type="submit">Add</button>
         </form>
         <p>{this.state.items.text}</p>
         
-          <ListItems items={this.state.items} deleteItem={this.deleteItem} setUpdate={this.setUpdate} onCheck = {this.onCheck} isChecked={this.state.currentItem.isChecked}/>
+          <ListItems 
+          items={this.state.items} 
+          deleteItem={this.deleteItem} 
+          setUpdate={this.setUpdate} 
+          onCheck={this.onCheck} 
+          isChecked={this.state.currentItem.isChecked}
+          />
         
       </header>
     </div>
@@ -112,4 +141,3 @@ hendle
 
 
 export default App;
-

@@ -3,7 +3,7 @@
     width: 300px;
     margin: 20px auto;
     height: 50px;
-    background-color: #bf07ac;
+    background-color: greenyellow;
     border-radius: 5px;
 }
 .list p{
@@ -14,10 +14,15 @@
 .list p input{
     background-color: transparent;
     border: 0;
-    color: #fff;
+    color: rgb(24, 23, 23);
     font-size: 20px;
     
     
+}
+input[type="text"]:focus,
+input[type="text"] {
+    background: transparent;
+    color: #463f3f;
 }
 .list p input:focus{
     outline: none;
@@ -58,10 +63,26 @@
     color:white;
     font-size: 14px;
 }
+
+table{
+    min-width: 80%;
+}
 .index{
     font-size: 14px;
 }
 .Router{
 font-size:14px;
 
+}
+.botel{
+    font-size: 50px;
+    color: red;
+}
+.form{
+    font-size: 50px;
+    color: red;
+
+}
+.bonder{
+    font-size: 30px;
 }
