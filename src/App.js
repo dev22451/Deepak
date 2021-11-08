@@ -1,115 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import ListItems from './ListItems'
+import React, {useState} from "react";
+import Home from "./components/Home";
+import Form from "./components/Form";
+import TodoList from "./components/TodoList";
+import "./App.css";
 
-class App extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      items:[],
-      currentItem:{
-        text:'',
-        key:'',
-        isChecked: false
-      }
-    }
-    this.addItem = this.addItem.bind(this);
-    this.handleInput = this.handleInput.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
-    this.setUpdate = this.setUpdate.bind(this);
-  }
-  addItem(e){
-    e.preventDefault();
-    const newItem = this.state.currentItem;
-    if(newItem.text !==""){
-      const items = [...this.state.items, newItem];
-    this.setState({
-      items: items,
-      currentItem:{
-        text:'',
-        key:''
-        
-      }
-    })
-   }
-  }
-  
 
-  handleInput(e){
-    this.setState({
-      currentItem:{
-        text: e.target.value,
-        key: Date.now(),
-        isChecked: false
-      }
-    })
-  }
-  deleteItem(key){
-    const filteredItems= this.state.items.filter(item =>
-      item.key!==key);
-    this.setState({
-      items: filteredItems
-    })
+const App = () => {
 
-  }
-  setUpdate(text,key){
-    const items = this.state.items;
-    items.map(item=>{      
-      if(item.key===key){
-        item.text= text;
-      }
-    })
-    this.setState({
-      items: items
-    })
-    
-   
-  }
-
-  handleCheckboxChange = (e) => {
-
-  this.setState({ isChecked: e.target.checked });
-}
-  toggleChange = () => {
-
-    this.setState({ isChecked: !this.state.isChecked });
-   
-}
-onCheck = (key) => {
-  if(this.state.currentItem.isChecked === true) {
-    this.setState({
-      currentItem:{
-        isChecked: false
-      }
-    })
-  } else {
-    this.setState({
-      currentItem:{
-        isChecked: true
-      }
-    })
-  }
-}
-hendle
- render(){
+  const [input, setInput] = useState("");
+  const [todos, setTodos] = useState([]);
+  const [editTodo, setEditTodo] = useState(null);
   return (
-    <div className="App">
-      <header>
-        <form id="to-do-form" onSubmit={this.addItem}>
-          <input style={{color:'black'}} type="text" placeholder="Enter task" value= {this.state.currentItem.text} onChange={this.handleInput}></input>
-          <button type="submit">Add</button>
-        </form>
-        <p>{this.state.items.text}</p>
-        
-          <ListItems items={this.state.items} deleteItem={this.deleteItem} setUpdate={this.setUpdate} onCheck = {this.onCheck} isChecked={this.state.currentItem.isChecked}/>
-        
-      </header>
+  <div className="container">
+    <div className="app-wrapper">
+      <div>
+          <Home />
+      </div>
+      <div>
+          <Form 
+          input={input}
+          setInput={setInput}
+          todos={todos}
+          setTodos={setTodos}
+          editTodo={editTodo}
+          setEditTodo={setEditTodo}
+          />
+          
+      </div>
+      <div> 
+        <TodoList todos={todos} setTodos={setTodos} setEditTodo={setEditTodo}/>
+      </div>
     </div>
+  </div>
   );
- }
-}
-
-
+  
+};
 export default App;
+
+
 
